@@ -21,7 +21,15 @@ namespace CodeCleaner
         public MainWindow()
         {
             InitializeComponent();
+
+
             
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            TemaTextBox.Focus();
         }
 
 
@@ -44,6 +52,16 @@ namespace CodeCleaner
         private void KodTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void TemaTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Bekuld_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

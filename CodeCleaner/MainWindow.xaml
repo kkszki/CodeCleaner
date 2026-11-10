@@ -5,17 +5,88 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeCleaner"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="800"
+        Loaded="Window_Loaded">
+
     <Grid Background="#FF187A48">
-        <Label Content="Code Cleaner" Margin="0,3,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" FontSize="30" FontWeight="Bold"/>
-        <Button x:Name="TallozasButton" Content="Fájl kiválasztása" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.535,-1.427" Margin="0,61,0,0" FontStyle="Italic" Click="TallozasButton_Click"/>
+
+        <Label Content="Code Cleaner"
+               Margin="0,3,0,0"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Top"
+               Background="{x:Null}"
+               FontSize="30"
+               FontWeight="Bold"/>
+
+        <Button x:Name="TallozasButton"
+                Content="Fájl kiválasztása"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                FontSize="20"
+                Margin="0,61,0,0"
+                FontStyle="Italic"
+                Click="TallozasButton_Click"/>
+
         <TextBox x:Name="KodTextBox"
-         VerticalAlignment="Stretch"
-         AcceptsReturn="True"
-         TextWrapping="NoWrap"
-         VerticalScrollBarVisibility="Auto"
-         HorizontalScrollBarVisibility="Auto"
-         HorizontalAlignment="Stretch"
-         Margin="0,100,0,0" TextChanged="KodTextBox_TextChanged"/>
+                 VerticalAlignment="Stretch"
+                 AcceptsReturn="True"
+                 TextWrapping="NoWrap"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"
+                 HorizontalAlignment="Stretch"
+                 Margin="0,180,0,0"/>
+
+        <!-- Téma beviteli mező -->
+        <Grid Width="220"
+              Height="35"
+              Margin="0,98,0,0"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Top">
+
+            <TextBox x:Name="TemaTextBox"
+                     FontSize="20"
+                     VerticalContentAlignment="Center"
+                     Background="White"
+                     Padding="5,0,5,0"/>
+
+            <TextBlock Text="Adja meg a témát"
+                       Foreground="Gray"
+                       FontSize="16"
+                       VerticalAlignment="Center"
+                       Margin="7,0,0,0"
+                       IsHitTestVisible="False">
+
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property="Visibility"
+                                Value="Collapsed"/>
+
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Text, ElementName=TemaTextBox}"
+                                         Value="">
+                                <Setter Property="Visibility"
+                                        Value="Visible"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+
+            </TextBlock>
+        </Grid>
+        <Button x:Name="Bekuld"
+        Content="AI elemzés"
+        Width="150"
+        Height="40"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Top"
+        Margin="0,135,0,0"
+        FontSize="18"
+        FontWeight="Bold"
+        Background="#FF124D32"
+        Foreground="White"
+        Cursor="Hand"
+        Click="Bekuld_Click"/>
     </Grid>
 </Window>
