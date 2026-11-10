@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CodeCleaner"
         mc:Ignorable="d"
-        Title="MainWindow"
-        Height="450"
-        Width="800"
+        Title="Code Cleaner"
+        Height="600"
+        Width="1000"
         Loaded="Window_Loaded">
 
     <Grid Background="#FF187A48">
 
+        <!-- Felső cím -->
         <Label Content="Code Cleaner"
                Margin="0,3,0,0"
                HorizontalAlignment="Center"
@@ -20,6 +21,7 @@
                FontSize="30"
                FontWeight="Bold"/>
 
+        <!-- Fájl kiválasztása -->
         <Button x:Name="TallozasButton"
                 Content="Fájl kiválasztása"
                 HorizontalAlignment="Center"
@@ -28,15 +30,6 @@
                 Margin="0,61,0,0"
                 FontStyle="Italic"
                 Click="TallozasButton_Click"/>
-
-        <TextBox x:Name="KodTextBox"
-                 VerticalAlignment="Stretch"
-                 AcceptsReturn="True"
-                 TextWrapping="NoWrap"
-                 VerticalScrollBarVisibility="Auto"
-                 HorizontalScrollBarVisibility="Auto"
-                 HorizontalAlignment="Stretch"
-                 Margin="0,180,0,0"/>
 
         <!-- Téma beviteli mező -->
         <Grid Width="220"
@@ -75,18 +68,83 @@
 
             </TextBlock>
         </Grid>
+
+        <!-- AI elemzés gomb -->
         <Button x:Name="Bekuld"
-        Content="AI elemzés"
-        Width="150"
-        Height="40"
-        HorizontalAlignment="Center"
-        VerticalAlignment="Top"
-        Margin="0,135,0,0"
-        FontSize="18"
-        FontWeight="Bold"
-        Background="#FF124D32"
-        Foreground="White"
-        Cursor="Hand"
-        Click="Bekuld_Click"/>
+                Content="AI elemzés"
+                Width="150"
+                Height="40"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                Margin="0,145,0,0"
+                FontSize="18"
+                FontWeight="Bold"
+                Background="#FF124D32"
+                Foreground="White"
+                Cursor="Hand"
+                Click="Bekuld_Click"/>
+
+        <!-- Alsó két oszlop -->
+        <Grid Margin="10,200,10,10">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Eredeti kód -->
+            <Grid Grid.Column="0"
+                  Margin="0,0,5,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Eredeti kód"
+                       Foreground="White"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+
+                <TextBox x:Name="KodTextBox"
+                         Grid.Row="1"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         AcceptsReturn="True"
+                         TextWrapping="NoWrap"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         FontSize="14"/>
+            </Grid>
+
+            <!-- AI által javított kód -->
+            <Grid Grid.Column="1"
+                  Margin="5,0,0,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="AI által javított kód"
+                       Foreground="White"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+
+                <TextBox x:Name="JavitottKodTextBox"
+                         Grid.Row="1"
+                         VerticalAlignment="Stretch"
+                         HorizontalAlignment="Stretch"
+                         AcceptsReturn="True"
+                         TextWrapping="NoWrap"
+                         VerticalScrollBarVisibility="Auto"
+                         HorizontalScrollBarVisibility="Auto"
+                         FontSize="14"/>
+            </Grid>
+
+        </Grid>
+
     </Grid>
 </Window>
