@@ -38,7 +38,13 @@ namespace CodeCleaner
             }
         }
 
-       
+        private void KodTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        private void TemaTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
 
         private async void Bekuld_Click(object sender, RoutedEventArgs e)
         {
