@@ -5,62 +5,40 @@ using System.Text;
 using System.Text.Json;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CodeCleaner
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+  
     public partial class MainWindow : Window
     {
+        private static readonly HttpClient client = new HttpClient();
+
         public MainWindow()
         {
             InitializeComponent();
-
-
-            
-
         }
-        private static readonly HttpClient client = new HttpClient();
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             TemaTextBox.Focus();
         }
 
-
         private void TallozasButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
-
-            dialog.Filter = "C# fájlok (*.cs)|*.cs";
+            OpenFileDialog dialog = new OpenFileDialog
+            {
+                Filter = "C# fájlok (*.cs)|*.cs"
+            };
 
             if (dialog.ShowDialog() == true)
             {
                 string fajlUt = dialog.FileName;
-
                 string kod = File.ReadAllText(fajlUt);
-
                 KodTextBox.Text = kod;
             }
         }
 
-        private void KodTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TemaTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
+       
 
         private async void Bekuld_Click(object sender, RoutedEventArgs e)
         {
@@ -69,45 +47,36 @@ namespace CodeCleaner
                 string tema = TemaTextBox.Text;
                 string kod = KodTextBox.Text;
 
-                if (string.IsNullOrWhiteSpace(tema) ||
-                string.IsNullOrWhiteSpace(kod))
+                if (string.IsNullOrWhiteSpace(tema) || string.IsNullOrWhiteSpace(kod))
                 {
                     MessageBox.Show("Add meg a témát és válassz ki egy fájlt!");
                     return;
                 }
 
+                string prompt = $@"
+Te egy tapasztalt programozó vagy.
 
-                
-                    // 3. Elkészítjük az AI-nak szánt üzenetet
-                    string prompt = $@"
-                    Te egy tapasztalt programozó vagy.
+A program témája: {tema}
 
-                    A program témája: {tema}
+Feladatod:
+Elemezd az alábbi forráskódot!
+Keresd meg az értelmetlen változóneveket.
+Javasolj helyettük beszédes neveket.
 
-                    Feladatod:
-                    Elemezd az alábbi forráskódot!
-                    Keresd meg az értelmetlen változóneveket.
-                    Javasolj helyettük beszédes neveket.
+FONTOS SZABÁLYOK:
+- Ne változtasd meg a program logikáját!
+- A namespace-t se változtasd soha! Mindig csak a class-on belül módosíthatsz!
+- Ne módosítsd az algoritmust!
+- Ne írj át más kódrészeket!
+- Csak változónevekre és függvényekre, eljárásokra adj javaslatokat!
+- Ne használj a változó névben szóközt, se ékezetet.
+- Ugyanazzal a sorral kezdődjön! tehát ne úgy, hogy c#
+- Írd meg a komplett kódot újra, az új változó nevekkel. és csak ennyit küldj vissza!
 
-                    FONTOS SZABÁLYOK:
-                    - Ne változtasd meg a program logikáját!
-                    - A namespace-t se változtasd soha! Mindig csak a class-on belül módosíthatsz!
-                    - Ne módosítsd az algoritmust!
-                    - Ne írj át más kódrészeket!
-                    - Csak változónevekre és függvényekre, eljárásokra adj javaslatokat!
-                    -Ne használj a változó névben szóközt, se ékezetet.
-                    - Ugyanazzal a sorral kezdődjön! tehát ne úgy, hogy c#
-                    -Írd meg a komplett kódot újra, az új változó nevekkel. és csak ennyit küldj vissza!
+A forráskód:
 
-                    A forráskód:
-
-                    {kod}
-                    ";
-
-
-
-
-
+{kod}
+";
 
                 var requestData = new
                 {
@@ -116,8 +85,8 @@ namespace CodeCleaner
                     {
                         new
                         {
-                             role = "user",
-                             content = prompt
+                            role = "user",
+                            content = prompt
                         }
                     },
                     stream = false
@@ -130,8 +99,6 @@ namespace CodeCleaner
                     Encoding.UTF8,
                     "application/json"
                 );
-
-               // MessageBox.Show(content.ReadAsStringAsync().Result);  // ez lesz amit küldünk, sima szöveget HTTP-kérésben elküldhető tartalommá alakít
 
                 var response = await client.PostAsync(
                     "http://localhost:11434/api/chat",
@@ -149,10 +116,6 @@ namespace CodeCleaner
                 string aiValasz = message.GetProperty("content").GetString() ?? "";
 
                 JavitottKodTextBox.Text = aiValasz;
-
-
-
-
             }
             catch (Exception ex)
             {
@@ -162,5 +125,26 @@ namespace CodeCleaner
             }
         }
 
+        private void MentesButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(JavitottKodTextBox.Text))
+            {
+                MessageBox.Show("Nincs menthető kód! Előbb végezd el az AI elemzést.");
+                return;
+            }
+
+            SaveFileDialog dialog = new SaveFileDialog
+            {
+                Filter = "C# fájlok (*.cs)|*.cs|Minden fájl (*.*)|*.*",
+                DefaultExt = "cs",
+                FileName = "JavitottKod.cs"
+            };
+
+            if (dialog.ShowDialog() == true)
+            {
+                File.WriteAllText(dialog.FileName, JavitottKodTextBox.Text, Encoding.UTF8);
+                MessageBox.Show("A fájl sikeresen elmentve!");
+            }
+        }
     }
 }
