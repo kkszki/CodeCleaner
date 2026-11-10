@@ -6,9 +6,16 @@
         xmlns:local="clr-namespace:CodeCleaner"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Background="#FFDA1C1C">
-        <Label Content="Code Cleaner" Margin="0,29,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" FontSize="30" FontWeight="Bold"/>
-        <Button Content="Fájl kiválasztása" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.535,-1.427" Margin="0,90,0,0" FontStyle="Italic"/>
-
+    <Grid Background="#FF187A48">
+        <Label Content="Code Cleaner" Margin="0,3,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" FontSize="30" FontWeight="Bold"/>
+        <Button x:Name="TallozasButton" Content="Fájl kiválasztása" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.535,-1.427" Margin="0,61,0,0" FontStyle="Italic" Click="TallozasButton_Click"/>
+        <TextBox x:Name="KodTextBox"
+         VerticalAlignment="Stretch"
+         AcceptsReturn="True"
+         TextWrapping="NoWrap"
+         VerticalScrollBarVisibility="Auto"
+         HorizontalScrollBarVisibility="Auto"
+         HorizontalAlignment="Stretch"
+         Margin="0,100,0,0" TextChanged="KodTextBox_TextChanged"/>
     </Grid>
 </Window>
