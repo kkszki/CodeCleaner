@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:CodeCleaner"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Background="#FFDA1C1C">
+        <Label Content="Code Cleaner" Margin="0,29,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Background="{x:Null}" FontSize="30" FontWeight="Bold"/>
+        <Button Content="Fájl kiválasztása" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" RenderTransformOrigin="0.535,-1.427" Margin="0,90,0,0" FontStyle="Italic"/>
 
     </Grid>
 </Window>
